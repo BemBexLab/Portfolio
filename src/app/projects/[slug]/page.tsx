@@ -11,7 +11,7 @@ type ProjectACF = {
   development_overture?: string;
   launch_and_beyond?: string;
   conclusion?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 };
 type Project = {
   id: number | string;
@@ -49,7 +49,10 @@ export default async function ProjectPage({ params }: Params) {
   return (
     <div className="min-h-screen px-4 py-16 flex flex-col items-center mt-[80px]">
       {/* Title */}
-      <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold max-w-4xl text-left w-full mb-[50px]" style={{ color: "#072d7f" }}>
+      <h1
+        className="text-2xl sm:text-3xl md:text-5xl font-bold max-w-4xl text-left w-full mb-[50px]"
+        style={{ color: "#072d7f" }}
+      >
         {project.title.rendered}
       </h1>
 
@@ -105,13 +108,12 @@ type SectionProps = { title: string; text: string };
 function Section({ title, text }: SectionProps) {
   return (
     <div className="space-y-3">
-      <h2
-        className="text-xl font-semibold"
-        style={{ color: "#072d7f" }}
-      >
+      <h2 className="text-xl font-semibold" style={{ color: "#072d7f" }}>
         {title}
       </h2>
-      <p className="text-lg leading-relaxed whitespace-pre-line text-black">{text}</p>
+      <p className="text-lg leading-relaxed whitespace-pre-line text-black">
+        {text}
+      </p>
     </div>
   );
 }
