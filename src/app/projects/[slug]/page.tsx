@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import BackButton from "./BackButton";
 
+// --- Types ---
 type ProjectACF = {
   project_image?: { url?: string };
   introduction?: string;
@@ -20,9 +21,11 @@ type Project = {
   acf: ProjectACF;
 };
 
+// --- API URL ---
 const API_URL =
   "https://olive-peafowl-546702.hostingersite.com/wp-json/wp/v2/posts?slug=";
 
+// --- Static params for SSG ---
 export async function generateStaticParams() {
   const res = await fetch(
     "https://olive-peafowl-546702.hostingersite.com/wp-json/wp/v2/posts"
@@ -31,6 +34,7 @@ export async function generateStaticParams() {
   return posts.map((post) => ({ slug: post.slug }));
 }
 
+// --- Main Page ---
 export default async function ProjectPage({
   params,
 }: {
@@ -102,6 +106,7 @@ export default async function ProjectPage({
   );
 }
 
+// --- Section subcomponent ---
 type SectionProps = { title: string; text: string };
 
 function Section({ title, text }: SectionProps) {
