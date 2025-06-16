@@ -1,16 +1,28 @@
-// src/app/projects/[slug]/ProjectPageClient.tsx
 "use client";
-
 import dynamic from "next/dynamic";
 
-// Dynamically import the client-only BackButton
+// Define a minimal type for your WordPress project data:
+type Project = {
+  title: { rendered: string };
+  acf?: {
+    project_image?: { url?: string };
+    introduction?: string;
+    genesis_of_collaboration?: string;
+    conceptualization?: string;
+    design_symphony?: string;
+    development_overture?: string;
+    launch_and_beyond?: string;
+    conclusion?: string;
+  };
+};
+
 const BackButton = dynamic(() => import("./BackButton"), { ssr: false });
 
-export default function ProjectPageClient({ project }) {
+export default function ProjectPageClient({ project }: { project: Project }) {
   const imageUrl = project.acf?.project_image?.url || "/default.jpg";
-  const acf = project.acf;
+  const acf = project.acf ?? {};
 
-  function Section({ title, text }) {
+  function Section({ title, text }: { title: string; text: string }) {
     return (
       <div className="space-y-3">
         <h2 className="text-xl font-semibold text-primary">{title}</h2>
