@@ -106,7 +106,7 @@ export default async function ProjectPage({
   );
 }
 
-// --- Section subcomponent ---
+// --- Section subcomponen ---
 type SectionProps = { title: string; text: string };
 
 function Section({ title, text }: SectionProps) {
