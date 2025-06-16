@@ -4,10 +4,11 @@ import ProjectPageClient from "./ProjectPageClient";
 // Define the type for the posts you fetch (just the fields you use)
 type WPPost = { slug: string };
 
+// API base URL for fetching posts by slug
 const API_URL =
   "https://olive-peafowl-546702.hostingersite.com/wp-json/wp/v2/posts?slug=";
 
-// Typing for static params (required by Next.js app router)
+// Next.js App Router expects this for SSG/dynamic routes
 export async function generateStaticParams(): Promise<{ slug: string }[]> {
   const res = await fetch(
     "https://olive-peafowl-546702.hostingersite.com/wp-json/wp/v2/posts"
@@ -16,7 +17,7 @@ export async function generateStaticParams(): Promise<{ slug: string }[]> {
   return posts.map((post) => ({ slug: post.slug }));
 }
 
-// Props typing for Next.js server component
+// Correct prop typing for an App Router dynamic route page
 export default async function ProjectPage({
   params,
 }: {
