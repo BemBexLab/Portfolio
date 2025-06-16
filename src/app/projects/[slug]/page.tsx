@@ -1,8 +1,6 @@
 import { notFound } from "next/navigation";
 import BackButton from "./BackButton";
 
-/* eslint-disable @next/next/no-img-element */
-
 type ProjectACF = {
   project_image?: { url?: string };
   introduction?: string;
@@ -12,7 +10,7 @@ type ProjectACF = {
   development_overture?: string;
   launch_and_beyond?: string;
   conclusion?: string;
-  [key: string]: string | number | boolean | { url?: string } | undefined;
+  [key: string]: unknown;
 };
 
 type Project = {
@@ -33,7 +31,6 @@ export async function generateStaticParams() {
   return posts.map((post) => ({ slug: post.slug }));
 }
 
-// The important fix is here:
 export default async function ProjectPage({
   params,
 }: {
@@ -61,7 +58,6 @@ export default async function ProjectPage({
       >
         {project.title.rendered}
       </h1>
-
       {/* Project Image */}
       <div className="w-full max-w-4xl rounded-2xl overflow-hidden shadow-xl mb-12">
         <img
@@ -70,36 +66,34 @@ export default async function ProjectPage({
           className="w-full h-auto object-cover"
         />
       </div>
-
       {/* Project Content Sections */}
       <div className="w-full max-w-3xl space-y-12 text-lg sm:text-xl text-black">
         {acf.introduction && (
-          <Section title="Introduction" text={acf.introduction} />
+          <Section title="Introduction" text={acf.introduction as string} />
         )}
         {acf.genesis_of_collaboration && (
           <Section
             title="Genesis Of Collaboration"
-            text={acf.genesis_of_collaboration}
+            text={acf.genesis_of_collaboration as string}
           />
         )}
         {acf.conceptualization && (
-          <Section title="Conceptualization" text={acf.conceptualization} />
+          <Section title="Conceptualization" text={acf.conceptualization as string} />
         )}
         {acf.design_symphony && (
-          <Section title="Design Symphony" text={acf.design_symphony} />
+          <Section title="Design Symphony" text={acf.design_symphony as string} />
         )}
         {acf.development_overture && (
           <Section
             title="Development Overture"
-            text={acf.development_overture}
+            text={acf.development_overture as string}
           />
         )}
         {acf.launch_and_beyond && (
-          <Section title="Launch And Beyond" text={acf.launch_and_beyond} />
+          <Section title="Launch And Beyond" text={acf.launch_and_beyond as string} />
         )}
-        {acf.conclusion && <Section title="Conclusion" text={acf.conclusion} />}
+        {acf.conclusion && <Section title="Conclusion" text={acf.conclusion as string} />}
       </div>
-
       {/* Back Button */}
       <div className="mt-16 text-center">
         <BackButton />
@@ -116,9 +110,7 @@ function Section({ title, text }: SectionProps) {
       <h2 className="text-xl font-semibold" style={{ color: "#072d7f" }}>
         {title}
       </h2>
-      <p className="text-lg leading-relaxed whitespace-pre-line text-black">
-        {text}
-      </p>
+      <p className="text-lg leading-relaxed whitespace-pre-line text-black">{text}</p>
     </div>
   );
 }
