@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import BackButton from "./BackButton";
 
-// Types
+/* eslint-disable @next/next/no-img-element */
+
 type ProjectACF = {
   project_image?: { url?: string };
   introduction?: string;
@@ -11,15 +12,15 @@ type ProjectACF = {
   development_overture?: string;
   launch_and_beyond?: string;
   conclusion?: string;
-  [key: string]: unknown;
+  [key: string]: string | number | boolean | { url?: string } | undefined;
 };
+
 type Project = {
   id: number | string;
   slug: string;
   title: { rendered: string };
   acf: ProjectACF;
 };
-type Params = { params: { slug: string } };
 
 const API_URL =
   "https://olive-peafowl-546702.hostingersite.com/wp-json/wp/v2/posts?slug=";
@@ -32,7 +33,12 @@ export async function generateStaticParams() {
   return posts.map((post) => ({ slug: post.slug }));
 }
 
-export default async function ProjectPage({ params }: Params) {
+// The important fix is here:
+export default async function ProjectPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
   const res = await fetch(`${API_URL}${params.slug}`, {
     next: { revalidate: 60 },
   });
@@ -102,7 +108,6 @@ export default async function ProjectPage({ params }: Params) {
   );
 }
 
-// Section Component with brand color heading
 type SectionProps = { title: string; text: string };
 
 function Section({ title, text }: SectionProps) {
